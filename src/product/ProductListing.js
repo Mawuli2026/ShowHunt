@@ -1,3 +1,6 @@
+console.log("ENV:", import.meta.env);
+console.log("API_URL:", API_URL);
+
 import { getParam } from "../js/utils.mjs";
 
 const API_URL = import.meta.env.VITE_API_URL;
