@@ -226,7 +226,7 @@ a {
   border-radius: 8px;
   padding: 1rem;
   background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease;
 }
 
@@ -240,7 +240,6 @@ a {
 .product-card:hover {
   transform: translateY(-4px);
 }
-
 
 .product-card img {
   height: 100px;
