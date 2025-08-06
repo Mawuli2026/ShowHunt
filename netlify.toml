@@ -1,0 +1,8 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[headers]]
+  for = "/cnm-sw.js"
+  [headers.values]
+  Cache-Control = "no-store"
