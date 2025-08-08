@@ -1,7 +1,5 @@
-console.log("ENV:", import.meta.env);
-console.log("API_URL:", API_URL);
-
 import { getParam } from "../js/utils.mjs";
+import { addToCart } from "../js/Cart.mjs"; // Make sure this is imported!
 
 const API_URL = import.meta.env.VITE_API_URL;
 const category = getParam("category") || "electronics";
@@ -20,21 +18,41 @@ async function loadProductsByCategory(category) {
 }
 
 function renderProducts(products) {
-  if (!Array.isArray(products)) {
-    productListEl.innerHTML = "<li>Invalid data.</li>";
-    return;
-  }
+  const template = document.getElementById("product-template");
+  productListEl.innerHTML = "";
 
-  productListEl.innerHTML = products
-    .map(
-      (product) => `
-      <li class="product-card">
-        <img src="${encodeURI(product.image)}" alt="${product.title}">
-        <h3>${product.title}</h3>
-        <p>$${product.price}</p>
-      </li>`,
-    )
-    .join("");
+  products.forEach((product) => {
+    const clone = template.content.cloneNode(true);
+    const img = clone.querySelector("img");
+    const title = clone.querySelector(".title");
+    const price = clone.querySelector(".price");
+
+    img.src = product.image;
+    img.alt = product.title;
+    title.textContent = product.title;
+    price.textContent = `$${product.price}`;
+
+    // ✅ Create "Add to Cart" button per product
+    const btn = document.createElement("button");
+    btn.textContent = "Add to Cart";
+    btn.classList.add("add-to-cart-btn");
+
+    btn.addEventListener("click", () => {
+      addToCart(product);
+      alert(`${product.title} added to cart`);
+    });
+
+    // Append the button inside the product card
+    clone.querySelector(".product-card")?.appendChild(btn);
+
+    // ✅ Wrap the product card in a clickable link (optional)
+    const link = document.createElement("a");
+    link.href = `/product/details.html?id=${product.id}`;
+    link.appendChild(clone);
+
+    productListEl.appendChild(link);
+  });
 }
 
 loadProductsByCategory(category);
+
