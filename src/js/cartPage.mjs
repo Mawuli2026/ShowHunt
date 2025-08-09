@@ -1,4 +1,4 @@
-import { getCart, removeFromCart } from "/js/Cart.mjs";
+import { getCart, removeFromCart } from "./Cart.mjs";
 
 const cartItemsEl = document.getElementById("cart-items");
 const cartTotalEl = document.getElementById("cart-total");
