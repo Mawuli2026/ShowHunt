@@ -1,7 +1,9 @@
 import { getParam } from "../js/utils.mjs";
 import { addToCart } from "../js/Cart.mjs"; // Make sure this is imported!
 
-const API_URL = import.meta.env.VITE_API_URL;
+// Hardcode API URL for vanilla deployment
+const API_URL = "https://fakestoreapi.com"; // replace with your actual API
+
 const category = getParam("category") || "electronics";
 const productListEl = document.getElementById("product-list");
 
@@ -55,4 +57,3 @@ function renderProducts(products) {
 }
 
 loadProductsByCategory(category);
-
