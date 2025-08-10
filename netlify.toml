@@ -1,14 +1,15 @@
 [build]
-  command = "npm run build"
-  publish = "dist"
+  command = "" # no build step
+  publish = "src"
 
 [[headers]]
   for = "/cnm-sw.js"
   [headers.values]
   Cache-Control = "no-store"
 
-  [[redirects]]
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
 
