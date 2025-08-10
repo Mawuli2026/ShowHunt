@@ -1,6 +1,7 @@
 // src/js/main.js
 
-const API_URL = import.meta.env.VITE_API_URL;
+// Define API URL directly
+const API_URL = "https://fakestoreapi.com"; // change to your real API endpoint
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("Main.js loaded 🎯");
