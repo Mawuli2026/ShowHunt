@@ -1,5 +1,7 @@
 import { getParam } from "../js/utils.mjs";
-const API_URL = import.meta.env.VITE_API_URL;
+
+// Vanilla-friendly: replace import.meta.env with a direct value
+const API_URL = "https://fakestoreapi.com"; // change to your actual API
 const productId = getParam("id");
 
 const detailEl = document.getElementById("product-detail");

@@ -1,4 +1,5 @@
-const API_BASE = import.meta.env.VITE_API_URL;
+// Replace Vite env with direct value
+const API_BASE = "https://fakestoreapi.com"; // change to your actual API
 
 export async function getProductsByCategory(category) {
   const res = await fetch(`${API_BASE}/products/category/${category}`);
