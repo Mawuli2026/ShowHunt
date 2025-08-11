@@ -5,13 +5,29 @@
     <title>Your Cart | ShowHunt</title>
     <link rel="stylesheet" href="./css/styles.css" />
     <script type="module" src="./js/CartPage.mjs"></script>
-    <script type="module" src="./js/Cart.mjs"></script>
   </head>
-  <body>
+  <a href="/cart.html" class="cart-link">
+    Cart <span id="cart-count" class="cart-count"></span>
+  </a>
+
+  <body class="cart-page">
     <main class="container">
-      <h2>Your Cart</h2>
-      <ul id="cart-items" class="product-list"></ul>
-      <p id="cart-total"></p>
+      <main class="cart-page">
+        <h2>Your Cart</h2>
+
+        <div class="cart-actions">
+          <button id="clear-cart" class="clear-btn">Clear Cart</button>
+        </div>
+
+        <ul id="cart-items"></ul>
+        <p id="cart-total"></p>
+
+        <div class="continue-shopping">
+          <a href="/" class="btn">← Continue Shopping</a>
+        </div>
+      </main>
+
+      <script type="module" src="./js/CartPage.mjs"></script>
     </main>
   </body>
 </html>

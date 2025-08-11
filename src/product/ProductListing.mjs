@@ -1,101 +1,67 @@
-
+// product/productListing.mjs
+import { addToCart } from "../js/Cart.mjs";
 
 const API_URL = "https://fakestoreapi.com";
 
-// Optional DOM elements (avoid null errors)
-const searchInput = document.getElementById("search-input");
-const categoryFilter = document.getElementById("category-filter");
-const productListEl = document.querySelector(".product-list");
+// ✅ Only run if we're on the products page
+if (document.body.classList.contains("products-page")) {
+  const productListEl = document.querySelector(".product-list");
 
-// Read category from URL (e.g., ?category=electronics)
-const urlParams = new URLSearchParams(window.location.search);
-const initialCategory = urlParams.get("category");
+  if (productListEl) {
+    loadProducts();
+  }
 
-let allProducts = [];
+  // Fetch and render products
+  async function loadProducts() {
+    try {
+      const res = await fetch(`${API_URL}/products`);
+      const products = await res.json();
+      renderProducts(products);
+    } catch (err) {
+      console.error("Failed to load products:", err);
+      productListEl.innerHTML = `<p class="error">⚠️ Could not load products.</p>`;
+    }
+  }
 
-// ✅ Fetch products & categories
-async function loadProducts() {
-  try {
-    const res = await fetch(`${API_URL}/products`);
-    allProducts = await res.json();
-    renderProducts(allProducts);
-
-    // Populate dropdown if it exists
-    if (categoryFilter) {
-      populateCategories(allProducts);
-
-      // Set initial category from URL
-      if (initialCategory) {
-        categoryFilter.value = initialCategory;
-        applyFilters();
-      }
-    } else if (initialCategory) {
-      // If no dropdown, still filter from URL
-      const filtered = allProducts.filter(p => p.category === initialCategory);
-      renderProducts(filtered);
+  // Render products into the list
+  function renderProducts(products) {
+    if (!products.length) {
+      productListEl.innerHTML = `<p class="empty">No products available.</p>`;
+      return;
     }
 
-  } catch (err) {
-    productListEl.innerHTML = `<p class="error">⚠️ Failed to load products.</p>`;
-    console.error(err);
-  }
-}
+    productListEl.innerHTML = products
+      .map(
+        (product) => `
+        <li class="product-card" data-id="${product.id}">
+          <img src="${product.image}" alt="${product.title}" />
+          <h3>${product.title}</h3>
+          <p>$${product.price}</p>
+          <button class="add-to-cart-btn">🛒 Add to Cart</button>
+        </li>
+      `
+      )
+      .join("");
 
-// ✅ Render products
-function renderProducts(products) {
-  if (!products.length) {
-    productListEl.innerHTML = `<p class="empty">No products found.</p>`;
-    return;
-  }
-
-  productListEl.innerHTML = products.map(product => `
-    <li class="product-card" data-id="${product.id}">
-      <img src="${product.image}" alt="${product.title}" />
-      <h3>${product.title}</h3>
-      <p>$${product.price}</p>
-    </li>
-  `).join("");
-
-  // Make each product clickable
-  document.querySelectorAll(".product-card").forEach(card => {
-    card.addEventListener("click", () => {
-      window.location.href = `../product-details.html?id=${card.dataset.id}`;
+    // ✅ Add "Add to Cart" functionality
+    document.querySelectorAll(".add-to-cart-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation(); // Prevent card click from firing
+        const productId = btn.closest(".product-card").dataset.id;
+        const product = products.find((p) => p.id == productId);
+        if (product) {
+          addToCart(product);
+          alert(`${product.title} added to cart ✅`);
+        }
+      });
     });
-  });
-}
 
-// ✅ Populate category dropdown
-function populateCategories(products) {
-  const categories = [...new Set(products.map(p => p.category))];
-  categories.forEach(cat => {
-    const option = document.createElement("option");
-    option.value = cat;
-    option.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
-    categoryFilter.appendChild(option);
-  });
-}
-
-// ✅ Apply filters
-function applyFilters() {
-  let filtered = allProducts;
-
-  if (searchInput) {
-    const searchTerm = searchInput.value.toLowerCase();
-    filtered = filtered.filter(p =>
-      p.title.toLowerCase().includes(searchTerm)
-    );
+    // ✅ Make entire card clickable for product details
+    document.querySelectorAll(".product-card").forEach((card) => {
+      card.addEventListener("click", () => {
+        const productId = card.dataset.id;
+        window.location.href = `/product/details.html?id=${productId}`;
+      });
+    });
   }
-
-  if (categoryFilter && categoryFilter.value) {
-    filtered = filtered.filter(p => p.category === categoryFilter.value);
-  }
-
-  renderProducts(filtered);
 }
-
-// Attach listeners only if elements exist
-if (searchInput) searchInput.addEventListener("input", applyFilters);
-if (categoryFilter) categoryFilter.addEventListener("change", applyFilters);
-
-// Start
-loadProducts();

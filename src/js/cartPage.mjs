@@ -1,42 +1,39 @@
-import { getCart, removeFromCart } from "./Cart.mjs";
+// js/CartPage.mjs
+document.addEventListener("DOMContentLoaded", () => {
+  renderCart();
 
-const cartItemsEl = document.getElementById("cart-items");
-const cartTotalEl = document.getElementById("cart-total");
+  document.getElementById("clear-cart")?.addEventListener("click", () => {
+    localStorage.removeItem("cart");
+    renderCart();
+  });
+});
 
 function renderCart() {
-  const cart = getCart();
-  cartItemsEl.innerHTML = "";
+  const cartItemsEl = document.getElementById("cart-items");
+  const cartTotalEl = document.getElementById("cart-total");
+
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   if (cart.length === 0) {
-    cartItemsEl.innerHTML = `<p class="empty-cart">🛒 Your cart is empty.</p>`;
+    cartItemsEl.innerHTML = "<li>Your cart is empty 🛒</li>";
     cartTotalEl.textContent = "";
     return;
   }
 
   let total = 0;
 
-  cart.forEach((item) => {
-    const li = document.createElement("li");
-    li.classList.add("product-card");
-
-    li.innerHTML = `
-      <img src="${item.image}" alt="${item.title}" />
-      <h3>${item.title}</h3>
-      <p>$${item.price.toFixed(2)} × ${item.quantity}</p>
-      <button class="remove-btn">Remove</button>
-    `;
-
-    // Remove item event
-    li.querySelector(".remove-btn").addEventListener("click", () => {
-      removeFromCart(item.id);
-      renderCart();
-    });
-
-    cartItemsEl.appendChild(li);
+  cartItemsEl.innerHTML = cart.map(item => {
     total += item.price * item.quantity;
-  });
+    return `
+      <li>
+        <img src="${item.image}" alt="${item.title}">
+        <div class="item-info">
+          <div class="item-title">${item.title}</div>
+          <div class="item-price">$${item.price.toFixed(2)} × ${item.quantity}</div>
+        </div>
+      </li>
+    `;
+  }).join("");
 
   cartTotalEl.textContent = `Total: $${total.toFixed(2)}`;
 }
-
-renderCart();

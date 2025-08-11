@@ -1,44 +1,22 @@
-// cart.mjs
-const CART_KEY = "showhunt-cart";
-
-// ✅ Get cart from localStorage safely
-export function getCart() {
-  try {
-    return JSON.parse(localStorage.getItem(CART_KEY)) || [];
-  } catch {
-    return [];
-  }
-}
-
-// ✅ Save cart to localStorage
-export function saveCart(cart) {
-  localStorage.setItem(CART_KEY, JSON.stringify(cart));
-}
-
-// ✅ Add item to cart
+// js/Cart.mjs
 export function addToCart(product) {
-  const cart = getCart();
-  const existing = cart.find((item) => item.id === product.id);
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const existing = cart.find(item => item.id === product.id);
 
   if (existing) {
     existing.quantity += 1;
   } else {
-    cart.push({ ...product, quantity: 1 });
+    cart.push(product);
   }
 
-  saveCart(cart);
-  console.log(`🛒 Added to cart: ${product.title}`);
+  localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-// ✅ Remove item by ID
-export function removeFromCart(id) {
-  const cart = getCart().filter((item) => item.id !== id);
-  saveCart(cart);
-  console.log(`❌ Removed from cart: ${id}`);
-}
-
-// ✅ Clear all cart items
-export function clearCart() {
-  localStorage.removeItem(CART_KEY);
-  console.log("🛒 Cart cleared");
+export function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const countEl = document.getElementById("cart-count");
+  if (countEl) {
+    countEl.textContent = totalItems > 0 ? totalItems : "";
+  }
 }
