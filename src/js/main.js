@@ -1,60 +1,78 @@
-// src/js/main.js
+const API_URL = import.meta.env.VITE_API_URL;
 
-// Define API URL directly
-const API_URL = "https://fakestoreapi.com"; // change to your real API endpoint
+const searchInput = document.getElementById("search-input");
+const categoryFilter = document.getElementById("category-filter");
+const productListEl = document.querySelector(".product-list");
 
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("Main.js loaded 🎯");
-  loadCategories();
-});
+let allProducts = [];
 
-/**
- * Fetch and render categories dynamically from the Fake Store API
- */
-async function loadCategories() {
-  const container = document.querySelector(".category-grid");
-
-  if (!container) return;
-
+// Fetch products
+async function loadProducts() {
   try {
-    const response = await fetch(`${API_URL}/products/categories`);
-    const categories = await response.json();
-
-    container.innerHTML = categories
-      .map((category) => {
-        const formatted = formatCategoryLabel(category);
-        return `
-          <a href="product/index.html?category=${encodeURIComponent(category)}" class="category-card">
-            <img src="/assets/images/${getImageForCategory(category)}" alt="${formatted}" />
-            <h4>${formatted}</h4>
-          </a>
-        `;
-      })
-      .join("");
-  } catch (error) {
-    console.error("Failed to load categories:", error);
-    container.innerHTML = "<p>Failed to load categories.</p>";
+    const res = await fetch(`${API_URL}/products`);
+    allProducts = await res.json();
+    renderProducts(allProducts);
+    populateCategories(allProducts);
+  } catch (err) {
+    console.error("Error loading products", err);
+    productListEl.innerHTML = `<p>⚠️ Failed to load products.</p>`;
   }
 }
 
-/**
- * Format category string to a proper label
- */
-function formatCategoryLabel(category) {
-  return category
-    .split(" ")
-    .map((word) => word[0].toUpperCase() + word.slice(1))
-    .join(" ");
+// Render products
+function renderProducts(products) {
+  if (!products.length) {
+    productListEl.innerHTML = `<p>No products found.</p>`;
+    return;
+  }
+
+  productListEl.innerHTML = products
+    .map(
+      (product) => `
+    <li class="product-card" data-id="${product.id}">
+      <img src="${product.image}" alt="${product.title}" />
+      <h3>${product.title}</h3>
+      <p>$${product.price}</p>
+    </li>
+  `,
+    )
+    .join("");
+
+  document.querySelectorAll(".product-card").forEach((card) => {
+    card.addEventListener("click", () => {
+      window.location.href = `product-details.html?id=${card.dataset.id}`;
+    });
+  });
 }
 
-/**
- * Map categories to image filenames (based on your `/assets/images` folder)
- */
-function getImageForCategory(category) {
-  const lower = category.toLowerCase();
-  if (lower.includes("men")) return "/images/men.png";
-  if (lower.includes("women")) return "/images/women.png";
-  if (lower.includes("jewel")) return "/images/jewery.png";
-  if (lower.includes("elect")) return "/images/electronic.png";
-  return "/images/favicon.png"; // fallback image
+// Populate category dropdown
+function populateCategories(products) {
+  const categories = [...new Set(products.map((p) => p.category))];
+  categories.forEach((cat) => {
+    const option = document.createElement("option");
+    option.value = cat;
+    option.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+    categoryFilter.appendChild(option);
+  });
 }
+
+// Apply filters
+function applyFilters() {
+  const searchTerm = searchInput.value.toLowerCase();
+  const selectedCategory = categoryFilter.value;
+
+  let filtered = allProducts.filter((p) =>
+    p.title.toLowerCase().includes(searchTerm),
+  );
+
+  if (selectedCategory) {
+    filtered = filtered.filter((p) => p.category === selectedCategory);
+  }
+
+  renderProducts(filtered);
+}
+
+searchInput.addEventListener("input", applyFilters);
+categoryFilter.addEventListener("change", applyFilters);
+
+loadProducts();
