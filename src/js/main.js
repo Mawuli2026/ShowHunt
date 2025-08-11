@@ -52,9 +52,9 @@ function formatCategoryLabel(category) {
  */
 function getImageForCategory(category) {
   const lower = category.toLowerCase();
-  if (lower.includes("men")) return "men.png";
-  if (lower.includes("women")) return "women.png";
-  if (lower.includes("jewel")) return "jewery.png";
-  if (lower.includes("elect")) return "electronic.png";
-  return "favicon.png"; // fallback image
+  if (lower.includes("men")) return "/images/men.png";
+  if (lower.includes("women")) return "/images/women.png";
+  if (lower.includes("jewel")) return "/images/jewery.png";
+  if (lower.includes("elect")) return "/images/electronic.png";
+  return "/images/favicon.png"; // fallback image
 }
