@@ -1,4 +1,3 @@
-// product/productListing.mjs
 import { addToCart } from "../js/Cart.mjs";
 
 const API_URL = "https://fakestoreapi.com";
