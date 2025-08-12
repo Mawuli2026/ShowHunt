@@ -16,7 +16,7 @@ async function loadCountries() {
     );
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-    const data = await res.json();
+    const data = await res.json(); 
 
     if (!Array.isArray(data)) {
       throw new Error("Invalid data format from REST Countries");
@@ -118,3 +118,32 @@ function initCheckoutForm() {
     form.reset();
   });
 }
+
+function loadOrderSummary() {
+  const summaryItemsEl = document.getElementById("summary-items");
+  const summaryTotalEl = document.getElementById("summary-total");
+
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  if (cart.length === 0) {
+    summaryItemsEl.innerHTML = "<li>Your cart is empty 🛒</li>";
+    summaryTotalEl.textContent = "";
+    return;
+  }
+
+  let total = 0;
+  summaryItemsEl.innerHTML = cart.map(item => {
+    const itemTotal = item.price * item.quantity;
+    total += itemTotal;
+    return `
+      <li>
+        <span>${item.title} × ${item.quantity}</span>
+        <span>$${itemTotal.toFixed(2)}</span>
+      </li>
+    `;
+  }).join("");
+
+  summaryTotalEl.textContent = `Total: $${total.toFixed(2)}`;
+}
+
+document.addEventListener("DOMContentLoaded", loadOrderSummary);
+
