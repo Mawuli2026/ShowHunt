@@ -1,3 +1,8 @@
+import { updateCartCount } from "./Cart.mjs";
+document.addEventListener("DOMContentLoaded", () => {
+  updateCartCount();
+});
+
 const API_URL = "https://fakestoreapi.com";
 
 const searchInput = document.getElementById("search-input");

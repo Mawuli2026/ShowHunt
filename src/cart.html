@@ -6,28 +6,33 @@
     <link rel="stylesheet" href="./css/styles.css" />
     <script type="module" src="./js/CartPage.mjs"></script>
   </head>
-  <a href="/cart.html" class="cart-link">
-    Cart <span id="cart-count" class="cart-count"></span>
-  </a>
-
   <body class="cart-page">
+    <!-- Cart link in header -->
+    <a href="/cart.html" class="cart-link">
+      Cart <span id="cart-count" class="cart-count"></span>
+    </a>
+
     <main class="container">
-      <main class="cart-page">
-        <h2>Your Cart</h2>
+      <h2>Your Cart</h2>
 
-        <div class="cart-actions">
-          <button id="clear-cart" class="clear-btn">Clear Cart</button>
-        </div>
+      <div class="cart-actions">
+        <button id="clear-cart" class="clear-btn">Clear Cart</button>
+      </div>
 
-        <ul id="cart-items"></ul>
-        <p id="cart-total"></p>
+      <ul id="cart-items"></ul>
+      <p id="cart-total"></p>
 
-        <div class="continue-shopping">
-          <a href="/" class="btn">← Continue Shopping</a>
-        </div>
-      </main>
+      <!-- Checkout button -->
+      <div class="checkout-actions">
+        <a href="/checkout.html" class="btn checkout-btn"
+          >Proceed to Checkout →</a
+        >
+      </div>
 
-      <script type="module" src="./js/CartPage.mjs"></script>
+      <!-- Continue shopping -->
+      <div class="continue-shopping">
+        <a href="/" class="btn">← Continue Shopping</a>
+      </div>
     </main>
   </body>
 </html>

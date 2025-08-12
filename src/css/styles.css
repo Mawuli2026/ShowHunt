@@ -378,3 +378,96 @@ a {
   vertical-align: top;
   margin-left: 4px;
 }
+
+/* === nested-like grouping via comments (no preprocessor) === */
+/* .checkout-page styles */
+.checkout-page {
+  --card-bg: #fff;
+  --muted: #666;
+}
+.checkout-page .checkout-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 2rem;
+  align-items: start;
+  animation: fadeInUp 0.4s ease both;
+}
+.checkout-page form label {
+  display: block;
+  margin-bottom: 0.75rem;
+  transition: transform 0.15s ease;
+}
+.checkout-page input,
+.checkout-page select {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.35rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  transition:
+    box-shadow 0.15s ease,
+    border-color 0.15s ease;
+}
+.checkout-page input:focus,
+.checkout-page select:focus {
+  border-color: #fca311;
+  box-shadow: 0 6px 20px rgba(252, 163, 17, 0.08);
+  outline: none;
+}
+
+/* small animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* product card transitions */
+.product-card {
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* cart-count badge */
+.cart-count {
+  display: inline-block;
+  min-width: 20px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: #e63946;
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+  transition: transform 0.12s ease;
+}
+.cart-count.bump {
+  transform: scale(1.2);
+}
+
+/* news item small animation */
+.news-item {
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+  transition: background 0.12s ease;
+}
+.news-item img {
+  width: 64px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+.news-item:hover {
+  background: #fafafa;
+}

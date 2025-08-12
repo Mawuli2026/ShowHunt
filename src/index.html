@@ -5,25 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ShowHunt | Home</title>
     <link rel="icon" href="/images/favicon.png" />
-    <script type="module" src="./js/main.js"></script>
     <link rel="stylesheet" href="./css/styles.css" />
+    <script type="module" src="./js/main.js"></script>
+    <script type="module" src="./js/homeFilters.mjs"></script>
+    <script type="module" src="./js/Checkout.js"></script>
   </head>
+
   <body>
     <!-- 🌐 HEADER -->
     <header class="site-header">
       <div class="container header-content">
         <a href="/" class="logo">
           <img src="/images/logo.png" alt="ShowHunt Logo" class="logo-img" />
-          <span>Show<span style="color: #fca311">Hunt</span></span></a
-        >
+          <span>Show<span style="color: #fca311">Hunt</span></span>
+        </a>
+
         <nav class="nav-links">
           <ul>
             <li>
               <a href="product/index.html?category=electronics">Products</a>
             </li>
-            <li>
-              <a href="/cart.html">Cart</a>
-            </li>
+            <li><a href="/cart.html">Cart</a></li>
           </ul>
         </nav>
 
@@ -34,12 +36,16 @@
         </div>
       </div>
     </header>
+
+    <!-- HERO SECTION -->
     <section class="hero">
       <div class="container">
         <h2>Your Ultimate Shopping Destination</h2>
         <p>Discover trending products, track what’s hot, and shop smarter.</p>
       </div>
     </section>
+
+    <!-- FILTERS -->
     <section class="filters">
       <input type="text" id="search-input" placeholder="Search products..." />
       <select id="category-filter">
@@ -47,8 +53,10 @@
       </select>
     </section>
 
+    <!-- PRODUCT LIST -->
     <ul class="product-list"></ul>
 
+    <!-- CATEGORIES -->
     <section class="categories">
       <div class="container">
         <h3>Shop by Category</h3>
@@ -85,6 +93,7 @@
       </div>
     </section>
 
+    <!-- FOOTER -->
     <footer class="site-footer">
       <div class="container">
         <p>&copy; 2025 ShowHunt</p>

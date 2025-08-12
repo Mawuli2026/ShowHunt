@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Checkout | ShowHunt</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <script type="module" src="/js/Checkout.js" defer></script>
+  </head>
+  <body class="checkout-page">
+    <main class="container">
+      <h1>Checkout</h1>
+
+      <section class="checkout-grid">
+        <form id="checkout-form" novalidate>
+          <h2>Shipping Information</h2>
+
+          <label>
+            Full name
+            <input
+              type="text"
+              name="fullName"
+              id="fullName"
+              required
+              minlength="2"
+            />
+            <span class="error" data-for="fullName"></span>
+          </label>
+
+          <label>
+            Email
+            <input type="email" name="email" id="email" required />
+            <span class="error" data-for="email"></span>
+          </label>
+
+          <label>
+            Address
+            <input type="text" name="address" id="address" required />
+            <span class="error" data-for="address"></span>
+          </label>
+
+          <label>
+            Country
+            <select id="country" name="country" required>
+              <option value="">Choose a country...</option>
+              <!-- populated by JS -->
+            </select>
+            <span class="error" data-for="country"></span>
+          </label>
+
+          <label>
+            Postal code
+            <input
+              type="text"
+              id="postal"
+              name="postal"
+              required
+              pattern="^[A-Za-z0-9 -]{3,10}$"
+            />
+            <span class="error" data-for="postal"></span>
+          </label>
+
+          <div class="shipping-row">
+            <p>Estimated shipping:</p>
+            <p id="shipping-cost">$0.00</p>
+          </div>
+
+          <button type="submit" class="btn primary">Place order</button>
+        </form>
+
+        <aside class="order-summary">
+          <h2>Order Summary</h2>
+          <ul id="summary-items"></ul>
+          <p id="summary-total"></p>
+        </aside>
+      </section>
+
+      <section class="news-panel" id="news-panel">
+        <h3>News</h3>
+        <div id="news-results">Loading news…</div>
+      </section>
+    </main>
+  </body>
+</html>
