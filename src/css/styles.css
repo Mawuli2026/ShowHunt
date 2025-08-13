@@ -379,40 +379,135 @@ a {
   margin-left: 4px;
 }
 
-/* === nested-like grouping via comments (no preprocessor) === */
-/* .checkout-page styles */
-.checkout-page {
-  --card-bg: #fff;
-  --muted: #666;
-}
-.checkout-page .checkout-grid {
+/* Checkout page layout */
+.checkout-grid {
   display: grid;
-  grid-template-columns: 1fr 320px;
+  grid-template-columns: 2fr 1fr;
   gap: 2rem;
-  align-items: start;
-  animation: fadeInUp 0.4s ease both;
 }
-.checkout-page form label {
+
+.checkout-page form {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.checkout-page h2 {
+  margin-top: 1.5rem;
+  font-size: 1.2rem;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.3rem;
+}
+
+/* Form fields */
+.checkout-page label {
   display: block;
-  margin-bottom: 0.75rem;
-  transition: transform 0.15s ease;
+  margin: 1rem 0 0.5rem;
+  font-weight: 500;
 }
+
 .checkout-page input,
 .checkout-page select {
   width: 100%;
-  padding: 0.6rem;
-  margin-top: 0.35rem;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  transition:
-    box-shadow 0.15s ease,
-    border-color 0.15s ease;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
 }
+
 .checkout-page input:focus,
 .checkout-page select:focus {
-  border-color: #fca311;
-  box-shadow: 0 6px 20px rgba(252, 163, 17, 0.08);
-  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+/* Payment Methods */
+.payment-methods {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.payment-methods label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+/* Card payment styling */
+.payment-details {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-top: 1rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.payment-details label {
+  display: block;
+  margin-bottom: 0.6rem;
+}
+
+.payment-details input {
+  width: 100%;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 0.3rem;
+}
+
+/* Order summary */
+.order-summary {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.order-summary ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+}
+
+.order-summary li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+/* Button */
+.btn.primary {
+  background: #4a90e2;
+  color: #fff;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn.primary:hover {
+  background: #3a7ac9;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* small animation */
@@ -470,4 +565,88 @@ a {
 }
 .news-item:hover {
   background: #fafafa;
+}
+
+/* Card Preview */
+.card-preview {
+  background: linear-gradient(135deg, #4a90e2, #357abd);
+  color: white;
+  padding: 1.2rem;
+  border-radius: 12px;
+  width: 320px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: "Courier New", monospace;
+  margin: 1rem 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.card-preview:hover {
+  transform: scale(1.03);
+}
+
+.card-chip {
+  width: 50px;
+  height: 35px;
+  background: gold;
+  border-radius: 6px;
+}
+
+.card-number {
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+}
+
+.card-name,
+.card-expiry {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.payment-methods {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.payment-option {
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+  background: white;
+}
+
+.payment-option img {
+  height: 40px;
+  display: block;
+}
+
+.payment-option:hover {
+  transform: scale(1.05);
+}
+
+.payment-option.selected {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
+}
+
+.payment-details {
+  margin-top: 1rem;
+}
+
+.payment-details label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.payment-details input,
+.payment-details select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
 }
