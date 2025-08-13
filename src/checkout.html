@@ -2,9 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Checkout | ShowHunt</title>
     <link rel="stylesheet" href="/css/styles.css" />
     <script type="module" src="/js/Checkout.js" defer></script>
+    <link rel="icon" href="/public/images/favicon.png" />
   </head>
   <body class="checkout-page">
     <main class="container">
@@ -42,7 +44,6 @@
             Country
             <select id="country" name="country" required>
               <option value="">Choose a country...</option>
-              <!-- populated by JS -->
             </select>
             <span class="error" data-for="country"></span>
           </label>
@@ -63,25 +64,26 @@
             <p>Estimated shipping:</p>
             <p id="shipping-cost">$0.00</p>
           </div>
-        <h2>Payment Method</h2>
-<div id="payment-methods" class="payment-methods">
-  <div class="payment-option" data-method="visa">
-    <img src="/images/visa.png" alt="Visa">
-  </div>
-  <div class="payment-option" data-method="mastercard">
-    <img src="/images/mastercard.png" alt="MasterCard">
-  </div>
-  <div class="payment-option" data-method="paypal">
-    <img src="/images/paypal.png" alt="PayPal">
-  </div>
-  <div class="payment-option" data-method="mobile">
-    <img src="/images/mobilemoney.png" alt="Mobile Money">
-  </div>
-</div>
 
-<div id="payment-details" class="payment-details">
-  <!-- JS injects the correct form here -->
-</div>
+          <h2>Payment Method</h2>
+          <div id="payment-methods" class="payment-methods">
+            <div class="payment-option" data-method="visa">
+              <img src="/public/images/visa.png" alt="Visa" />
+            </div>
+            <div class="payment-option" data-method="mastercard">
+              <img src="/images/mastercard.png" alt="MasterCard" />
+            </div>
+            <div class="payment-option" data-method="paypal">
+              <img src="/images/paypal.png" alt="PayPal" />
+            </div>
+            <div class="payment-option" data-method="mobile">
+              <img src="/images/both.png" alt="Mobile Money" />
+            </div>
+          </div>
+
+          <div id="payment-details" class="payment-details">
+            <!-- JS injects the correct form here -->
+          </div>
 
           <button type="submit" class="btn primary">Place order</button>
         </form>

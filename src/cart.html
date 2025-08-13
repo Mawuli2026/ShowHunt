@@ -2,7 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Your Cart | ShowHunt</title>
+    <link rel="icon" href="/public/images/favicon.png" />
     <link rel="stylesheet" href="./css/styles.css" />
     <script type="module" src="./js/CartPage.mjs"></script>
   </head>
@@ -22,16 +24,10 @@
       <ul id="cart-items"></ul>
       <p id="cart-total"></p>
 
-      <!-- Checkout button -->
-      <div class="checkout-actions">
-        <a href="/checkout.html" class="btn checkout-btn"
-          >Proceed to Checkout →</a
-        >
-      </div>
-
-      <!-- Continue shopping -->
-      <div class="continue-shopping">
-        <a href="/" class="btn">← Continue Shopping</a>
+      <!-- Checkout & Continue Shopping buttons side-by-side -->
+      <div class="cart-actions">
+        <a href="/checkout.html" class="proceed-btn">Proceed to Checkout →</a>
+        <a href="/" class="continue-btn">← Continue Shopping</a>
       </div>
     </main>
   </body>

@@ -116,53 +116,71 @@ function initCheckoutForm() {
   const form = document.getElementById("checkout-form");
   if (!form) return;
 
- // Payment method logo selection
-const paymentOptions = document.querySelectorAll(".payment-option");
-const paymentDetailsEl = document.getElementById("payment-details");
-let selectedMethod = null;
+  // Payment method logo selection
+  const paymentOptions = document.querySelectorAll(".payment-option");
+  const paymentDetailsContainer = document.getElementById("payment-details");
 
-paymentOptions.forEach(option => {
-  option.addEventListener("click", () => {
-    // Remove selection from all
-    paymentOptions.forEach(opt => opt.classList.remove("selected"));
-    option.classList.add("selected");
-    selectedMethod = option.dataset.method;
+  paymentOptions.forEach((option) => {
+    option.addEventListener("click", () => {
+      // Highlight selected
+      paymentOptions.forEach((o) => o.classList.remove("selected"));
+      option.classList.add("selected");
 
-    // Inject corresponding payment form
-    if (selectedMethod === "visa" || selectedMethod === "mastercard") {
-      paymentDetailsEl.innerHTML = `
+      // Slide in the right payment form
+      paymentDetailsContainer.classList.remove("active");
+
+      // Generate the correct form
+      const method = option.dataset.method;
+      let formHTML = "";
+
+      if (method === "visa" || method === "mastercard") {
+        formHTML = `
+        <div class="card-preview">
+          <div class="card-chip"></div>
+          <div class="card-number">#### #### #### ####</div>
+          <div class="card-name">YOUR NAME</div>
+          <div class="card-expiry">MM/YY</div>
+        </div>
         <label>Card Number
-          <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+          <input type="text" placeholder="1234 5678 9012 3456" required />
         </label>
-        <label>Name on Card
-          <input type="text" placeholder="John Doe" required>
-        </label>
-        <label>Expiry
-          <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" required>
+        <label>Expiry Date
+          <input type="text" placeholder="MM/YY" required />
         </label>
         <label>CVV
-          <input type="text" id="cardCVV" placeholder="123" maxlength="4" required>
+          <input type="text" placeholder="123" required />
         </label>
       `;
-    } else if (selectedMethod === "paypal") {
-      paymentDetailsEl.innerHTML = `<p>You will be redirected to PayPal after placing your order.</p>`;
-    } else if (selectedMethod === "mobile") {
-      paymentDetailsEl.innerHTML = `
+      } else if (method === "paypal") {
+        formHTML = `
+        <label>PayPal Email
+          <input type="email" placeholder="you@example.com" required />
+        </label>
+      `;
+      } else if (method === "mobile") {
+        formHTML = `
         <label>Mobile Number
-          <input type="tel" id="mobileNumber" placeholder="+1 234 567 890" required>
+          <input type="tel" placeholder="+233 55 123 4567" required />
         </label>
         <label>Network
           <select required>
-            <option value="">Select Network</option>
-            <option value="mtn">MTN</option>
-            <option value="vodafone">Vodafone</option>
-            <option value="airtel">Airtel</option>
+            <option value="">Select Operator</option>
+            <option>MTN</option>
+            <option>Vodafone</option>
+            <option>AirtelTigo</option>
           </select>
         </label>
       `;
-    }
+      }
+
+      paymentDetailsContainer.innerHTML = formHTML;
+
+      // Trigger animation
+      requestAnimationFrame(() => {
+        paymentDetailsContainer.classList.add("active");
+      });
+    });
   });
-});
 
   // Form submission
   form.addEventListener("submit", (e) => {

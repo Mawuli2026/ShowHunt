@@ -1,7 +1,4 @@
 import { updateCartCount } from "./Cart.mjs";
-document.addEventListener("DOMContentLoaded", () => {
-  updateCartCount();
-});
 
 const API_URL = "https://fakestoreapi.com";
 
@@ -10,6 +7,17 @@ const categoryFilter = document.getElementById("category-filter");
 const productListEl = document.querySelector(".product-list");
 
 let allProducts = [];
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateCartCount();
+
+  // Only run product logic if the list exists on this page
+  if (productListEl) {
+    loadProducts();
+    if (searchInput) searchInput.addEventListener("input", applyFilters);
+    if (categoryFilter) categoryFilter.addEventListener("change", applyFilters);
+  }
+});
 
 // Fetch products
 async function loadProducts() {
@@ -20,12 +28,16 @@ async function loadProducts() {
     populateCategories(allProducts);
   } catch (err) {
     console.error("Error loading products", err);
-    productListEl.innerHTML = `<p>⚠️ Failed to load products.</p>`;
+    if (productListEl) {
+      productListEl.innerHTML = `<p>⚠️ Failed to load products.</p>`;
+    }
   }
 }
 
-// Render products
+// Render products (now uses anchor links)
 function renderProducts(products) {
+  if (!productListEl) return;
+
   if (!products.length) {
     productListEl.innerHTML = `<p>No products found.</p>`;
     return;
@@ -34,25 +46,25 @@ function renderProducts(products) {
   productListEl.innerHTML = products
     .map(
       (product) => `
-    <li class="product-card" data-id="${product.id}">
-      <img src="${product.image}" alt="${product.title}" />
-      <h3>${product.title}</h3>
-      <p>$${product.price}</p>
-    </li>
-  `,
+        <li class="product-card">
+          <a href="/product/details.html?id=${product.id}">
+            <img src="${product.image}" alt="${product.title}" />
+            <h3>${product.title}</h3>
+            <p>$${product.price}</p>
+          </a>
+        </li>
+      `,
     )
     .join("");
-
-  document.querySelectorAll(".product-card").forEach((card) => {
-    card.addEventListener("click", () => {
-      window.location.href = `product-details.html?id=${card.dataset.id}`;
-    });
-  });
 }
 
 // Populate category dropdown
 function populateCategories(products) {
+  if (!categoryFilter) return;
+
   const categories = [...new Set(products.map((p) => p.category))];
+  // Reset options except the first default one if you want
+  // categoryFilter.innerHTML = `<option value="">All Categories</option>`;
   categories.forEach((cat) => {
     const option = document.createElement("option");
     option.value = cat;
@@ -63,6 +75,8 @@ function populateCategories(products) {
 
 // Apply filters
 function applyFilters() {
+  if (!searchInput || !categoryFilter) return;
+
   const searchTerm = searchInput.value.toLowerCase();
   const selectedCategory = categoryFilter.value;
 
@@ -76,8 +90,3 @@ function applyFilters() {
 
   renderProducts(filtered);
 }
-
-searchInput.addEventListener("input", applyFilters);
-categoryFilter.addEventListener("change", applyFilters);
-
-loadProducts();

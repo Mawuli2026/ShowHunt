@@ -2,13 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Product Details | ShowHunt</title>
+    <link rel="icon" href="/public/images/favicon.png" />
     <link rel="stylesheet" href="/css/styles.css" />
     <script type="module" src="/product/ProductDetails.mjs" defer></script>
   </head>
   <body>
-    <main class="product-detail-container">
-      <div id="product-detail"></div>
+    <main class="product-detail container">
+      <a href="/" class="back-to-shop">← Back to Shop</a>
+
+      <div id="product-detail" class="product-grid">
+        <!-- JS will inject product image + details here -->
+      </div>
     </main>
   </body>
 </html>
