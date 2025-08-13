@@ -1199,7 +1199,7 @@ body {
 }
 
 .auth-page input:focus {
-  border-color: #fca311;
+  border-color: #f1b75a;
   outline: none;
   box-shadow: 0 0 5px rgba(252,163,17,0.5);
 }
@@ -1325,4 +1325,30 @@ body {
   .filters select {
     width: 100%;
   }
+}
+
+
+/* Toast container */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #fca311;
+  color: white;
+  padding: 0.8rem 1.2rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  z-index: 999;
+}
+
+/* Show state */
+.toast.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
