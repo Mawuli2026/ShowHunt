@@ -9,6 +9,7 @@
     <script type="module" src="./js/main.js"></script>
     <script type="module" src="./js/homeFilters.mjs"></script>
     <script type="module" src="./js/Checkout.js"></script>
+    <script type="module" src="./js/nav.js"></script>
   </head>
 
   <body>
@@ -23,6 +24,7 @@
           />
           <span>Show<span style="color: #fca311">Hunt</span></span>
         </a>
+       <button class="menu-toggle" id="menu-toggle">☰</button>
 
         <nav class="nav-links">
           <ul>
@@ -49,13 +51,15 @@
       </div>
     </section>
 
-    <!-- FILTERS -->
     <section class="filters">
-      <input type="text" id="search-input" placeholder="Search products..." />
-      <select id="category-filter">
-        <option value="">All Categories</option>
-      </select>
-    </section>
+  <div class="search-wrapper">
+    <input type="text" id="search-input" placeholder="Search products..." />
+  </div>
+  <select id="category-filter">
+    <option value="">All Categories</option>
+  </select>
+</section>
+
 
     <!-- PRODUCT LIST -->
     <ul class="product-list"></ul>
